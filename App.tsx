@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {playersList} from './src/json/players';
+import { playersList } from './src/json/players';
 
 const App = () => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
@@ -25,7 +25,7 @@ const App = () => {
     name,
   ) => {
     console.log(
-      'PlayerSelect function console log at line 20' + player_id,
+      'PlayerSelect function console log at line 20 : ' + player_id,
       event_player_credit,
       role,
       team_name,
@@ -41,7 +41,7 @@ const App = () => {
       selectedPlayers.length < 11 &&
       totalCredits - event_player_credit >= 0 &&
       selectedPlayers.filter(player => player.team_name === team_name).length <
-        7
+      7
     ) {
       switch (role) {
         case 'Batsman':
@@ -51,7 +51,7 @@ const App = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              {player_id, event_player_credit, team_name, role: role, name},
+              { player_id, event_player_credit, team_name, role: role, name },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -68,7 +68,7 @@ const App = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              {player_id, event_player_credit, team_name, role: role, name},
+              { player_id, event_player_credit, team_name, role: role, name },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -85,7 +85,7 @@ const App = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              {player_id, event_player_credit, team_name, role: role, name},
+              { player_id, event_player_credit, team_name, role: role, name },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -102,7 +102,7 @@ const App = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              {player_id, event_player_credit, team_name, role: role, name},
+              { player_id, event_player_credit, team_name, role: role, name },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -119,7 +119,7 @@ const App = () => {
       ToastAndroid.show('Not enough Credits!', ToastAndroid.SHORT);
     }
 
-    const updatedTeamPlayerCount = {...teamPlayerCount};
+    const updatedTeamPlayerCount = { ...teamPlayerCount };
     updatedTeamPlayerCount[team_name] = (updatedTeamPlayerCount[team_name] || 0) + 1;
     setTeamPlayerCount(updatedTeamPlayerCount);
   };
@@ -129,6 +129,22 @@ const App = () => {
   //   setTotalCredits(100);
   //   setTeamPlayerCount({});
   // };
+
+  // playersList.map((allList, allIndex) => {
+  //   selectedPlayers.map((selectedItem, selectedIndex) => {
+  //     if (selectedItem.player_id === allList.player_id){
+  //       console.log(allList);
+  //       allList.is_playing = true;
+        
+  //       return (
+  //         <View key={selectedIndex}>
+  //           <Text>hello</Text>
+  //         </View>
+  //       )
+  //     }
+  //   })
+  // })
+
 
   const openModal = () => {
     if (
@@ -140,9 +156,9 @@ const App = () => {
       selectedPlayers.filter(player => player.role === 'Wicket-Keeper')
         .length <= 5 &&
       selectedPlayers.filter(player => player.role === 'All-Rounder').length >=
-        0 &&
+      0 &&
       selectedPlayers.filter(player => player.role === 'All-Rounder').length <=
-        4 &&
+      4 &&
       selectedPlayers.filter(player => player.role === 'Bowler').length >= 3 &&
       selectedPlayers.filter(player => player.role === 'Bowler').length <= 7
     ) {
@@ -156,7 +172,7 @@ const App = () => {
   };
 
   return (
-    <View style={{backgroundColor: 'white'}}>
+    <View style={{ backgroundColor: 'white' }}>
       <Text
         style={{
           alignSelf: 'center',
@@ -168,35 +184,35 @@ const App = () => {
         Pick Players
       </Text>
 
-      <View style={{flexDirection: 'row', alignSelf: 'center', marginTop: 10}}>
-        <View style={{borderWidth: 2, width: 80}}>
-          <Text style={{color: 'black', alignSelf: 'center'}}>
+      <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10 }}>
+        <View style={{ borderWidth: 2, width: 80 }}>
+          <Text style={{ color: 'black', alignSelf: 'center' }}>
             {selectedPlayers.length}/11
           </Text>
-          <Text style={{color: 'black', alignSelf: 'center'}}> Players</Text>
+          <Text style={{ color: 'black', alignSelf: 'center' }}> Players</Text>
         </View>
-        <View style={{borderWidth: 2, width: 80}}>
-          <Text style={{color: 'black', alignSelf: 'center'}}>
+        <View style={{ borderWidth: 2, width: 80 }}>
+          <Text style={{ color: 'black', alignSelf: 'center' }}>
             Melbourne Stars: {teamPlayerCount['Melbourne Stars'] || 0}
           </Text>
         </View>
-        <View style={{borderWidth: 2, width: 80}}>
-          <Text style={{color: 'black', alignSelf: 'center'}}>
+        <View style={{ borderWidth: 2, width: 80 }}>
+          <Text style={{ color: 'black', alignSelf: 'center' }}>
             Perth Scorchers: {teamPlayerCount['Perth Scorchers'] || 0}
           </Text>
         </View>
-        <View style={{borderWidth: 2, width: 80}}>
+        <View style={{ borderWidth: 2, width: 80 }}>
           <Text
-            style={{color: 'black', alignSelf: 'center', fontWeight: '700'}}>
+            style={{ color: 'black', alignSelf: 'center', fontWeight: '700' }}>
             {' '}
             {totalCredits}
           </Text>
-          <Text style={{color: 'black', alignSelf: 'center'}}> Cr Left</Text>
+          <Text style={{ color: 'black', alignSelf: 'center' }}> Cr Left</Text>
         </View>
       </View>
 
       <View>
-      {/* <TouchableOpacity
+        {/* <TouchableOpacity
         style={{ borderWidth: 2, borderRadius: 2, width: 150, alignSelf: 'center', marginTop: 10 }}
         onPress={() => {
           clearSelections
@@ -216,17 +232,18 @@ const App = () => {
           Pick 3 - 7 Batsman
         </Text>
         {playersList.map((item, index) => {
+          const isSelected = selectedPlayers.some(player => player.player_id === item.player_id);
           if (item.role === 'Batsman')
             return (
               <View key={index}>
                 <View
                   style={{
-                    borderWidth: 2,
-                    borderColor: 'black',
+                    borderWidth: isSelected ? 4 : 2,
+                    borderColor: isSelected ? 'green' : 'black',
                     margin: 10,
                     borderRadius: 10,
                   }}>
-                  <View style={{margin: 10}}>
+                  <View style={{ margin: 10 }}>
                     <TouchableOpacity
                       onPress={() => {
                         playerSelect(
@@ -238,8 +255,8 @@ const App = () => {
                         );
                         console.log(item.player_id);
                       }}>
-                      <Text style={{color: 'black'}}>Name : {item.name}</Text>
-                      <Text style={{color: 'black'}}>
+                      <Text style={{ color: 'black' }}>Name : {item.name}</Text>
+                      <Text style={{ color: 'black' }}>
                         Team Name : {item.team_name}
                       </Text>
                       <Text
@@ -256,21 +273,22 @@ const App = () => {
               </View>
             );
         })}
-        <Text style={{color: 'black', fontSize: 20, paddingLeft: 15}}>
+        <Text style={{ color: 'black', fontSize: 20, paddingLeft: 15 }}>
           Pick 1 - 5 Wicket-Keepers
         </Text>
         {playersList.map((item, index) => {
+          const isSelected = selectedPlayers.some(player => player.player_id === item.player_id);
           if (item.role === 'Wicket-Keeper')
             return (
               <View key={index}>
                 <View
                   style={{
-                    borderWidth: 2,
-                    borderColor: 'black',
+                    borderWidth: isSelected ? 4 : 2,
+                    borderColor: isSelected ? 'green' : 'black',
                     margin: 10,
                     borderRadius: 10,
                   }}>
-                  <View style={{margin: 10}}>
+                  <View style={{ margin: 10 }}>
                     <TouchableOpacity
                       onPress={() => {
                         playerSelect(
@@ -282,12 +300,17 @@ const App = () => {
                         );
                         console.log(item.player_id);
                       }}>
-                      <Text style={{color: 'black'}}>Name : {item.name}</Text>
-                      <Text style={{color: 'black'}}>
+                      <Text style={{ color: 'black' }}>Name : {item.name}</Text>
+                      <Text style={{ color: 'black' }}>
                         Team Name : {item.team_name}
                       </Text>
-                      <Text style={{color: 'black'}}>
-                        Player Credit : {item.event_player_credit}
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'flex-end',
+                          position: 'absolute',
+                        }}>
+                        Credit : {item.event_player_credit}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -295,21 +318,22 @@ const App = () => {
               </View>
             );
         })}
-        <Text style={{color: 'black', fontSize: 20, paddingLeft: 15}}>
+        <Text style={{ color: 'black', fontSize: 20, paddingLeft: 15 }}>
           Pick 0 - 4 All Rounders
         </Text>
         {playersList.map((item, index) => {
+          const isSelected = selectedPlayers.some(player => player.player_id === item.player_id);
           if (item.role === 'All-Rounder')
             return (
               <View key={index}>
                 <View
                   style={{
-                    borderWidth: 2,
-                    borderColor: 'black',
+                    borderWidth: isSelected ? 4 : 2,
+                    borderColor: isSelected ? 'green' : 'black',
                     margin: 10,
                     borderRadius: 10,
                   }}>
-                  <View style={{margin: 10}}>
+                  <View style={{ margin: 10 }}>
                     <TouchableOpacity
                       onPress={() => {
                         playerSelect(
@@ -321,12 +345,17 @@ const App = () => {
                         );
                         console.log(item.player_id);
                       }}>
-                      <Text style={{color: 'black'}}>Name : {item.name}</Text>
-                      <Text style={{color: 'black'}}>
+                      <Text style={{ color: 'black' }}>Name : {item.name}</Text>
+                      <Text style={{ color: 'black' }}>
                         Team Name : {item.team_name}
                       </Text>
-                      <Text style={{color: 'black'}}>
-                        Player Credit : {item.event_player_credit}
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'flex-end',
+                          position: 'absolute',
+                        }}>
+                        Credit : {item.event_player_credit}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -334,21 +363,22 @@ const App = () => {
               </View>
             );
         })}
-        <Text style={{color: 'black', fontSize: 20, paddingLeft: 15}}>
+        <Text style={{ color: 'black', fontSize: 20, paddingLeft: 15 }}>
           Pick 3 - 7 Bowlers
         </Text>
         {playersList.map((item, index) => {
+          const isSelected = selectedPlayers.some(player => player.player_id === item.player_id);
           if (item.role === 'Bowler')
             return (
               <View key={index}>
                 <View
                   style={{
-                    borderWidth: 2,
-                    borderColor: 'black',
+                    borderWidth: isSelected ? 4 : 2,
+                    borderColor: isSelected ? 'green' : 'black',
                     margin: 10,
                     borderRadius: 10,
                   }}>
-                  <View style={{margin: 10}}>
+                  <View style={{ margin: 10 }}>
                     <TouchableOpacity
                       onPress={() => {
                         playerSelect(
@@ -360,12 +390,17 @@ const App = () => {
                         );
                         console.log(item.player_id);
                       }}>
-                      <Text style={{color: 'black'}}>Name : {item.name}</Text>
-                      <Text style={{color: 'black'}}>
+                      <Text style={{ color: 'black' }}>Name : {item.name}</Text>
+                      <Text style={{ color: 'black' }}>
                         Team Name : {item.team_name}
                       </Text>
-                      <Text style={{color: 'black'}}>
-                        Player Credit : {item.event_player_credit}
+                      <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'flex-end',
+                          position: 'absolute',
+                        }}>
+                        Credit : {item.event_player_credit}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -381,17 +416,17 @@ const App = () => {
             alignSelf: 'center',
           }}
           onPress={openModal}>
-          <Text style={{color: 'black', fontSize: 20, alignSelf: 'center'}}>
+          <Text style={{ color: 'black', fontSize: 20, alignSelf: 'center' }}>
             Proceed
           </Text>
         </TouchableOpacity>
-        <Text style={{marginBottom: 135}}></Text>
+        <Text style={{ marginBottom: 135 }}></Text>
       </ScrollView>
 
       <Modal visible={modalVisible} animationType="slide">
         <View>
           <ScrollView>
-            <Text style = {{color: 'black', alignSelf: 'center', fontWeight: '600', fontSize: 20}}>Picked Players</Text>
+            <Text style={{ color: 'black', alignSelf: 'center', fontWeight: '600', fontSize: 20 }}>Picked Players</Text>
             {selectedPlayers.map((player, index) => (
               <View key={index}>
                 {console.log(player)}
@@ -402,32 +437,37 @@ const App = () => {
                     margin: 10,
                     borderRadius: 10,
                   }}>
-                  <View style={{margin: 10}}>
-                    <Text style={{color: 'black'}}>
+                  <View style={{ margin: 10 }}>
+                    <Text style={{ color: 'black' }}>
                       Team Name: {player.team_name}
                     </Text>
-                    <Text style={{color: 'black'}}>Name: {player.name}</Text>
-                    <Text style={{color: 'black'}}>
-                      Player Credit: {player.event_player_credit}
-                    </Text>
-                    <Text style={{color: 'black'}}>Role: {player.role}</Text>
+                    <Text style={{ color: 'black' }}>Name: {player.name}</Text>
+                    <Text
+                        style={{
+                          color: 'black',
+                          alignSelf: 'flex-end',
+                          position: 'absolute',
+                        }}>
+                        Credit : {player.event_player_credit}
+                      </Text>
+                    <Text style={{ color: 'black' }}>Role: {player.role}</Text>
                   </View>
                 </View>
               </View>
             ))}
             <TouchableOpacity
-          style={{
-            borderWidth: 2,
-            borderRadius: 2,
-            width: 100,
-            alignSelf: 'center',
-          }}
-          onPress={() => setModalVisible(false)} >
-          <Text style={{color: 'black', fontSize: 20, alignSelf: 'center'}}>
-            Back
-          </Text>
-        </TouchableOpacity>
-        <Text></Text>
+              style={{
+                borderWidth: 2,
+                borderRadius: 2,
+                width: 100,
+                alignSelf: 'center',
+              }}
+              onPress={() => setModalVisible(false)} >
+              <Text style={{ color: 'black', fontSize: 20, alignSelf: 'center' }}>
+                Back
+              </Text>
+            </TouchableOpacity>
+            <Text></Text>
           </ScrollView>
         </View>
       </Modal>
