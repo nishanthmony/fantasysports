@@ -19,6 +19,11 @@ const Home = () => {
   const [totalCredits, setTotalCredits] = useState(100);
   const [modalVisible, setModalVisible] = useState(false);
   const [teamPlayerCount, setTeamPlayerCount] = useState({});
+
+  //testing teamname
+  const [perthScorchers, setPerthScorchers] = useState(0);
+  const [melbourneStars, setMelbourneStars] = useState(0);
+
   const [splashLoading, setSplashLoading] = useState(false);
 
   const playerSelect = async (
@@ -27,36 +32,40 @@ const Home = () => {
     role,
     team_name,
     name,
+    team_logo,
+    points
   ) => {
-    // console.log('PlayerSelect function console log at line 30 : ' + player_id, event_player_credit, role, team_name, name)
+    console.log('PlayerSelect function console log at line 30 : ' + 
+    player_id, event_player_credit, 
+    role, team_name, name, 
+    team_logo, points )
 
     const isSelected = selectedPlayers.some(player => player.player_id === player_id);
+    console.log(isSelected);
 
     const updatedSelectedPlayers = isSelected
       ? selectedPlayers.filter(player => player.player_id !== player_id)
       : [
         ...selectedPlayers,
-        { player_id, event_player_credit, team_name, role: role, name },
+        { player_id, event_player_credit, team_name, role: role, name, team_logo, points },
       ];
 
     if (isSelected) {
       setSelectedPlayers(updatedSelectedPlayers);
+      if (team_name === 'Perth Scorchers') {
+        setPerthScorchers(perthScorchers - 1);
+      } else {
+        setMelbourneStars(melbourneStars - 1);
+      }
       setTotalCredits(isSelected ? totalCredits + event_player_credit : totalCredits - event_player_credit);
       return;
     }
 
-    const updatedTeamPlayerCount = { ...teamPlayerCount };
-
-    if (!isSelected) {
-      console.log(isSelected);
-      updatedTeamPlayerCount[team_name] = (updatedTeamPlayerCount[team_name] || 0) + 1;
-    } else if (isSelected) {
-      console.log(isSelected);
-      updatedTeamPlayerCount[team_name] = (updatedTeamPlayerCount[team_name] || teamPlayerCount[team_name]) - 1;
+    if (team_name === 'Perth Scorchers' && !isSelected) {
+      setPerthScorchers(perthScorchers + 1);
+    } else if (team_name === 'Melbourne Stars' && !isSelected) {
+      setMelbourneStars(melbourneStars + 1)
     }
-
-    setTeamPlayerCount(updatedTeamPlayerCount);
-
 
     if (
       selectedPlayers.length < 11 &&
@@ -72,7 +81,7 @@ const Home = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              { player_id, event_player_credit, team_name, role: role, name },
+              { player_id, event_player_credit, team_name, role: role, name, team_logo, points },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -89,7 +98,7 @@ const Home = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              { player_id, event_player_credit, team_name, role: role, name },
+              { player_id, event_player_credit, team_name, role: role, name, team_logo, points },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -106,7 +115,7 @@ const Home = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              { player_id, event_player_credit, team_name, role: role, name },
+              { player_id, event_player_credit, team_name, role: role, name, team_logo, points },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -123,7 +132,7 @@ const Home = () => {
           ) {
             setSelectedPlayers([
               ...selectedPlayers,
-              { player_id, event_player_credit, team_name, role: role, name },
+              { player_id, event_player_credit, team_name, role: role, name, team_logo, points },
             ]);
             setTotalCredits(totalCredits - event_player_credit);
           } else {
@@ -141,12 +150,14 @@ const Home = () => {
     } else {
       ToastAndroid.show('Team Limit exceeded!', ToastAndroid.SHORT);
     }
+
   };
 
   const clearSelections = () => {
     setSelectedPlayers([]);
     setTotalCredits(100);
-    setTeamPlayerCount({});
+    setPerthScorchers(0);
+    setMelbourneStars(0);
   };
 
   const openModal = () => {
@@ -186,7 +197,7 @@ const Home = () => {
     <SafeAreaView style={{ backgroundColor: '#ACACAC' }}>
       <Splash loading={splashLoading} />
       <View>
-        <View style={{ borderWidth: 3, borderColor: 'grey', top: -3, backgroundColor: 'black', borderBottomLeftRadius: 50, borderBottomRightRadius: 50, height: 200}}>
+        <View style={{ borderWidth: 3, borderColor: 'grey', top: -3, backgroundColor: 'black', borderBottomLeftRadius: 50, borderBottomRightRadius: 50, height: 200 }}>
 
           <Text
             style={{
@@ -208,7 +219,7 @@ const Home = () => {
             </View>
             <View style={{ borderWidth: 2, width: 80, borderColor: 'white', padding: 4 }}>
               <Text style={{ color: 'white', alignSelf: 'center' }}>
-                {teamPlayerCount['Melbourne Stars'] || 0}
+                {melbourneStars}
               </Text>
               <Text style={{ color: 'white', alignSelf: 'center' }}>
                 Melbourne Stars:
@@ -216,7 +227,7 @@ const Home = () => {
             </View>
             <View style={{ borderWidth: 2, width: 80, borderColor: 'white', padding: 4 }}>
               <Text style={{ color: 'white', alignSelf: 'center' }}>
-                {teamPlayerCount['Perth Scorchers'] || 0}
+                {perthScorchers}
               </Text>
               <Text style={{ color: 'white', alignSelf: 'center' }}>
                 Perth Scorchers:
@@ -242,7 +253,6 @@ const Home = () => {
             </TouchableOpacity>
           </View>
         </View>
-
 
         <ScrollView>
           <Text
@@ -275,6 +285,8 @@ const Home = () => {
                             item.role,
                             item.team_name,
                             item.name,
+                            item.team_logo,
+                            item.event_total_points
                           );
                         }}>
                         <View style={{ flexDirection: 'row' }}>
@@ -328,6 +340,8 @@ const Home = () => {
                             item.role,
                             item.team_name,
                             item.name,
+                            item.team_logo,
+                            item.event_total_points
                           );
                           console.log(item.player_id);
                         }}>
@@ -382,6 +396,8 @@ const Home = () => {
                             item.role,
                             item.team_name,
                             item.name,
+                            item.team_logo,
+                            item.event_total_points
                           );
                           console.log(item.player_id);
                         }}>
@@ -436,6 +452,8 @@ const Home = () => {
                             item.role,
                             item.team_name,
                             item.name,
+                            item.team_logo,
+                            item.event_total_points
                           );
                           console.log(item.player_id);
                         }}>
@@ -485,12 +503,12 @@ const Home = () => {
       </View>
 
       <Modal visible={modalVisible} animationType="slide">
-        <View>
+        <View style = {{backgroundColor: '#ACACAC'}}>
           <ScrollView>
             <Text style={{ color: 'black', alignSelf: 'center', fontWeight: '600', fontSize: 20 }}>Picked Players</Text>
             {selectedPlayers.map((player, index) => (
               <View key={index}>
-                {/* {console.log(player)} */}
+                {console.log(player)}
                 <View
                   style={{
                     borderWidth: 2,
@@ -499,19 +517,27 @@ const Home = () => {
                     borderRadius: 10,
                   }}>
                   <View style={{ margin: 10 }}>
-                    <Text style={{ color: 'black' }}>
-                      Team Name: {player.team_name}
-                    </Text>
-                    <Text style={{ color: 'black' }}>Name: {player.name}</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Image source={{ uri: player.team_logo }} style={{ height: 39, width: 39, position: 'relative' }} />
+                      <Text style={{ color: 'black', fontWeight: '800', fontSize: 15, alignSelf: 'center' }}>{'  ' + player.name}</Text>
+                    </View>
                     <Text
-                      style={{
-                        color: 'black',
-                        alignSelf: 'flex-end',
-                        position: 'absolute',
-                      }}>
-                      Credit : {player.event_player_credit}
-                    </Text>
-                    <Text style={{ color: 'black' }}>Role: {player.role}</Text>
+                          style={{
+                            color: 'black',
+                            alignSelf: 'flex-end',
+                            position: 'absolute',
+                          }}>
+                          {player.event_player_credit} Cr
+                        </Text>
+                        <Text
+                          style={{
+                            color: 'black',
+                            alignSelf: 'flex-end',
+                            position: 'absolute',
+                            top: 28
+                          }}>
+                          {player.points} Pts
+                        </Text>
                   </View>
                 </View>
               </View>
