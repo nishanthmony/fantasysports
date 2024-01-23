@@ -18,7 +18,6 @@ const Home = () => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [totalCredits, setTotalCredits] = useState(100);
   const [modalVisible, setModalVisible] = useState(false);
-  const [teamPlayerCount, setTeamPlayerCount] = useState({});
 
   //testing teamname
   const [perthScorchers, setPerthScorchers] = useState(0);
@@ -35,13 +34,13 @@ const Home = () => {
     team_logo,
     points
   ) => {
-    console.log('PlayerSelect function console log at line 30 : ' + 
-    player_id, event_player_credit, 
-    role, team_name, name, 
-    team_logo, points )
+    // console.log('PlayerSelect function console log at line 30 : ' + 
+    // player_id, event_player_credit, 
+    // role, team_name, name, 
+    // team_logo, points )
 
     const isSelected = selectedPlayers.some(player => player.player_id === player_id);
-    console.log(isSelected);
+    // console.log(isSelected);
 
     const updatedSelectedPlayers = isSelected
       ? selectedPlayers.filter(player => player.player_id !== player_id)
@@ -343,7 +342,7 @@ const Home = () => {
                             item.team_logo,
                             item.event_total_points
                           );
-                          console.log(item.player_id);
+                          // console.log(item.player_id);
                         }}>
                         <View style={{ flexDirection: 'row' }}>
                           <Image source={{ uri: item.team_logo }} style={{ height: 39, width: 39, position: 'relative' }} />
@@ -508,7 +507,7 @@ const Home = () => {
             <Text style={{ color: 'black', alignSelf: 'center', fontWeight: '600', fontSize: 20 }}>Picked Players</Text>
             {selectedPlayers.map((player, index) => (
               <View key={index}>
-                {console.log(player)}
+                {/* {console.log(player)} */}
                 <View
                   style={{
                     borderWidth: 2,
